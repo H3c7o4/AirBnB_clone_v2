@@ -9,15 +9,11 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        """Returns a dictionary of models currently in storage"""
-        if cls is not None:
-            cls_objects = {}
-            for k, v in FileStorage.__objects.items():
-                if k.startswith(cls.__name__):
-                    cls_objects.update({k: v})
-            return cls_objects
-        else:
+        """Devuelve un diccionario de modelos actualmente almacenados"""
+        if cls is None:
             return FileStorage.__objects
+        return {k: v for k, v in FileStorage.__objects.items()
+                if type(val) == cls}
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -30,15 +26,14 @@ class FileStorage:
             temp.update(FileStorage.__objects)
             for key, val in temp.items():
                 temp[key] = val.to_dict()
-            json.dump(temp, f, sort_keys=True, indent=4)
+            json.dump(temp, f)
 
     def delete(self, obj=None):
-        """Deletes the object obj if obj is in __objects"""
-        if obj is not None:
-            for k, v in FileStorage.__objects.items():
-                if v is obj:
-                    tmp = k
-            FileStorage.__objects.pop(tmp)
+        """Para eliminar obj de __objects si está dentro"""
+        if not obj:
+            return
+        key = "{}.{}".format(type(obj).__name__, obj.id)
+        del FileStorage.__objects[key]
 
     def reload(self):
         """Loads storage dictionary from file"""
@@ -51,10 +46,10 @@ class FileStorage:
         from models.review import Review
 
         classes = {
-            'BaseModel': BaseModel, 'User': User, 'Place': Place,
-            'State': State, 'City': City, 'Amenity': Amenity,
-            'Review': Review
-        }
+                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
+                    'State': State, 'City': City, 'Amenity': Amenity,
+                    'Review': Review
+                  }
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
@@ -65,5 +60,5 @@ class FileStorage:
             pass
 
     def close(self):
-        """Handles storage close"""
+        """Close for JSON"""
         self.reload()
