@@ -3,14 +3,14 @@
 
 # verify if nginx is installed
 nginx -v &> /dev/null
-folder = "/data/"
-s_foler = "/data/web_static/"
-s_folder_0 = "/data/web_static/releases/"
-s_folder_1 = "/data/web_static/shared/"
-ss_folder = "/data/web_static/releases/test/"
-html_file = "/data/web_static/releases/test/index.html"
-link_target = "/data/web_static/releases/test/"
-link_name = "/data/web_static/current"
+folder="/data/"
+s_foler="/data/web_static/"
+s_folder_0="/data/web_static/releases/"
+s_folder_1="/data/web_static/shared/"
+ss_folder="/data/web_static/releases/test/"
+html_file="/data/web_static/releases/test/index.html"
+link_target="/data/web_static/releases/test/"
+link_name="/data/web_static/current"
 
 # If the previous command return an error nginx isn't installed
 if [ $? -ne 0 ]
@@ -30,32 +30,32 @@ fi
 # Create the folder /data/web_static/ if it doesn’t already exist
 if [ ! -d "$s_folder" ]
 then
-        mkdir "$s_folder"
+        sudo mkdir "$s_folder"
 fi
 
 # Create the folder /data/web_static/releases/ if it doesn’t already exist
 if [ ! -d "$s_folder_0" ]
 then
-        mkdir "$s_folder_0"
+        sudo mkdir "$s_folder_0"
 fi
 
 # Create the folder /data/web_static/shared/ if it doesn’t already exist
 if [ ! -d "$s_folder_1" ]
 then
-        mkdir "$s_folder_1"
+        sudo mkdir "$s_folder_1"
 fi
 
 # Create the folder /data/web_static/releases/test/ if it doesn’t already exist
 if [ ! -d "$ss_folder" ]
 then
-        mkdir "$ss_folder"
+        sudo mkdir "$ss_folder"
 fi
 
 # Create a fake HTML file /data/web_static/releases/test/index.html
 # (with simple content, to test your Nginx configuration)
 if [ ! -e "$html_file" ]
 then
-	touch "$html_file"
+	sudo touch "$html_file"
 	echo "<!DOCTYPE html>" > $html_file
 	echo "<html lang=\"en\">" >> 
 	echo "<head>" >> $html_file
@@ -74,9 +74,9 @@ fi
 # it should be deleted and recreated every time the script is ran.
 if [ -L "$link_name" ]
 then
-	rm "$link_name"
+	sudo rm "$link_name"
 else
-	ln -s "$link_target" "$link_name"
+	sudo ln -s "$link_target" "$link_name"
 fi
 
 # Give ownership of the /data/ folder to the ubuntu user AND group
