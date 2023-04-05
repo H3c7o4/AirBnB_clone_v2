@@ -2,18 +2,18 @@
 # Bash script that sets up your web servers for the deployment of web_static.
 
 # verify if nginx is installed
-nginx -v &> /dev/null
 folder="/data/"
-s_foler="/data/web_static/"
+s_folder="/data/web_static/"
 s_folder_0="/data/web_static/releases/"
 s_folder_1="/data/web_static/shared/"
 ss_folder="/data/web_static/releases/test/"
 html_file="/data/web_static/releases/test/index.html"
 link_target="/data/web_static/releases/test/"
 link_name="/data/web_static/current"
+nginx -v &> /dev/null
 
 # If the previous command return an error nginx isn't installed
-if [ $? -ne 0 ]
+if nginx -v &> /dev/null
 then
 	sudo apt update -y && apt upgrade -y
 	sudo apt install nginx -y
@@ -56,18 +56,17 @@ fi
 if [ ! -e "$html_file" ]
 then
 	sudo touch "$html_file"
-	echo "<!DOCTYPE html>" > $html_file
-	echo "<html lang=\"en\">" >> 
-	echo "<head>" >> $html_file
-	echo "  <meta charset=\"UTF-8\">" >> $html_file
-	echo "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" >> $html_file
-	echo "  <title>Exemple de page</title>" >> $html_file
-	echo "</head>" >> $html_file
-	echo "<body>" >> $html_file
-	echo "  <h1>Bonjour, bienvenue sur ma page !</h1>" >> $html_file
-	echo "</body>" >> $html_file
-	echo "</html>" >> $html_file
-
+	echo "<!DOCTYPE html>" | sudo tee $html_file > /dev/null
+	echo "<html lang=\"en\">" | sudo tee -a $html_file > /dev/null 
+	echo "<head>" | sudo tee -a $html_file > /dev/null
+	echo "  <meta charset=\"UTF-8\">" | sudo tee -a $html_file > /dev/null
+	echo "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">" | sudo tee -a $html_file > /dev/null
+	echo "  <title>Exemple de page</title>" | sudo tee -a $html_file > /dev/null
+	echo "</head>" | sudo tee -a $html_file > /dev/null
+	echo "<body>" | sudo tee -a $html_file > /dev/null
+	echo "  <h1>Bonjour, bienvenue sur ma page !</h1>" | sudo tee -a $html_file > /dev/null
+	echo "</body>" | sudo tee -a $html_file > /dev/null
+	echo "</html>" | sudo tee -a $html_file > /dev/null
 fi
 
 # Create a symbolic link. If the symbolic link already exists,
