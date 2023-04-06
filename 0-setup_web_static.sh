@@ -24,7 +24,7 @@ fi
 # Create the folder /data/ if it doesn’t already exist
 if [ ! -d "$folder" ]
 then
-	mkdir "$folder"
+	sudo mkdir "$folder"
 fi
 
 # Create the folder /data/web_static/ if it doesn’t already exist
