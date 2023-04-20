@@ -10,16 +10,19 @@ ss_folder="/data/web_static/releases/test/"
 html_file="/data/web_static/releases/test/index.html"
 link_target="/data/web_static/releases/test/"
 link_name="/data/web_static/current"
-nginx -v &> /dev/null
+#nginx -v &> /dev/null
 
 # If the previous command return an error nginx isn't installed
-if nginx -v &> /dev/null
-then
-	sudo apt update -y && apt upgrade -y
-	sudo apt install nginx -y
-
-	sudo nginx -t && sudo /etc/init.d/nginx reload
-fi
+#if nginx -v &> /dev/null
+#then
+#	sudo apt update -y && apt upgrade -y
+#	sudo apt install nginx -y
+#
+#	sudo nginx -t && sudo /etc/init.d/nginx reload
+#fi
+sudo apt update -y && apt upgrade -y >/dev/null 2>&1
+sudo apt install nginx -y >/dev/null 2>&1
+sudo nginx -t && sudo /etc/init.d/nginx reload
 
 # Create the folder /data/ if it doesn’t already exist
 if [ ! -d "$folder" ]
