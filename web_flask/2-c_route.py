@@ -29,7 +29,7 @@ def C_is_something(text):
     followed by the value of the text  on a web browser
     """
     text = text.replace("_", " ")
-    return 'c {}'.format(text)
+    return 'C {}'.format(text)
 
 
 if __name__ == '__main__':
