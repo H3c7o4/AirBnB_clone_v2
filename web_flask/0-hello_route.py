@@ -10,3 +10,7 @@ app = Flask(__name__)
 def hello_HBNB():
     """ Function that returns a message on a web browser """
     return 'Hello HBNB!'
+
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=5000)
